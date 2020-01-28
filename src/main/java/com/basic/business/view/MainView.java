@@ -5,20 +5,28 @@
  */
 package com.basic.business.view;
 
+import com.basic.business.controller.DestinationController;
 import com.basic.business.entities.Destinations;
 import com.basic.business.system.IDestinationService;
 import javax.swing.table.DefaultTableModel;
+
+import org.springframework.boot.autoconfigure.kafka.ConcurrentKafkaListenerContainerFactoryConfigurer;
 import org.springframework.stereotype.Component;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 /**
  *
  * @author ecem
  */
 @Component
-public class DestinationView extends javax.swing.JFrame {
+public class MainView extends javax.swing.JFrame {
+	public IDestinationService destinationService;
     /**
      * Creates new form view
      */
-    public DestinationView() {
+    public MainView() {
         initComponents();
     }
 
@@ -41,9 +49,18 @@ public class DestinationView extends javax.swing.JFrame {
         btnDetails = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
-        jPanelDetails = new javax.swing.JPanel();
-        jPanelAdd = new javax.swing.JPanel();
-        jPanelUpdate = new javax.swing.JPanel();
+        
+        btnAdd.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		java.awt.Window win[] = java.awt.Window.getWindows();
+        		for(int i=0;i<win.length;i++){
+        		win[i].dispose();
+        		}
+        		AddView addView=new AddView();
+            	addView.setVisible(true);
+            	addView.setManager(destinationService);
+        	}
+        });
 
         jButton1.setText("jButton1");
 
@@ -118,84 +135,18 @@ public class DestinationView extends javax.swing.JFrame {
                 .addContainerGap(81, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanelDetailsLayout = new javax.swing.GroupLayout(jPanelDetails);
-        jPanelDetails.setLayout(jPanelDetailsLayout);
-        jPanelDetailsLayout.setHorizontalGroup(
-            jPanelDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
-        );
-        jPanelDetailsLayout.setVerticalGroup(
-            jPanelDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanelAddLayout = new javax.swing.GroupLayout(jPanelAdd);
-        jPanelAdd.setLayout(jPanelAddLayout);
-        jPanelAddLayout.setHorizontalGroup(
-            jPanelAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
-        );
-        jPanelAddLayout.setVerticalGroup(
-            jPanelAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanelUpdateLayout = new javax.swing.GroupLayout(jPanelUpdate);
-        jPanelUpdate.setLayout(jPanelUpdateLayout);
-        jPanelUpdateLayout.setHorizontalGroup(
-            jPanelUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
-        );
-        jPanelUpdateLayout.setVerticalGroup(
-            jPanelUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
-        );
-
         jLayeredPane1.setLayer(jPanelMain, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jPanelDetails, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jPanelAdd, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jPanelUpdate, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
-        jLayeredPane1.setLayout(jLayeredPane1Layout);
         jLayeredPane1Layout.setHorizontalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanelDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanelAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanelUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+        	jLayeredPane1Layout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(jPanelMain, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jLayeredPane1Layout.setVerticalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanelDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanelAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanelUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+        	jLayeredPane1Layout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(jPanelMain, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -228,6 +179,9 @@ public class DestinationView extends javax.swing.JFrame {
             model.addRow(row);
         }
     }
+    public void setManager(IDestinationService destinationService) {
+    	this.destinationService=destinationService;
+    }
 
     // Variables declaration - do not modify                     
     private javax.swing.JButton btnAdd;
@@ -235,10 +189,7 @@ public class DestinationView extends javax.swing.JFrame {
     private javax.swing.JButton btnDetails;
     private javax.swing.JButton jButton1;
     private javax.swing.JLayeredPane jLayeredPane1;
-    private javax.swing.JPanel jPanelAdd;
-    private javax.swing.JPanel jPanelDetails;
     private javax.swing.JPanel jPanelMain;
-    private javax.swing.JPanel jPanelUpdate;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblSearch;
     private javax.swing.JTable tblDestinations;

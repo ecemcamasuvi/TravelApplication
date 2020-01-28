@@ -36,8 +36,10 @@ public class DestinationDal implements IDestinationDal {
     }
 
     @Override
+    @Transactional
     public void add(Destinations destination) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        	Session session=entityManager.unwrap(Session.class);
+        	session.saveOrUpdate(destination);
     }
 
     @Override

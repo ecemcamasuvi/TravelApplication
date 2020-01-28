@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+
 /**
  *
  * @author ecem
@@ -25,18 +27,18 @@ public class Destinations {
     @GeneratedValue(strategy = GenerationType.IDENTITY)//sürekli değeri artsın
     private int id;
     
-    @Column(name="name")
+    @Column(name="name",length = 50, nullable = false)
     private String name;
-    @Column(name="country")
+    @Column(name="country",length = 50, nullable = false)
     private String country;
     
-    @Column(name="city")
+    @Column(name="city",length = 50, nullable = false)
     private String city;
     
-    @Column(name="description")
+    @Column(name="description",length = 100, nullable = false)
     private String description;
     
-    @Column(name="imageurl")
+    @Column(name="imageurl",length = 100, nullable = false)
     private String imageUrl;
 
     public Destinations() {

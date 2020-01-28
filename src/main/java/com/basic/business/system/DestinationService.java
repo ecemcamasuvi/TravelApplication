@@ -33,8 +33,9 @@ public class DestinationService implements IDestinationService {
     }
 
     @Override
+    @Transactional
     public void add(Destinations destination) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       this.destinationDal.add(destination);
     }
 
     @Override

@@ -5,8 +5,9 @@
  */
 package com.basic.business.controller;
 
+import com.basic.business.entities.Destinations;
 import com.basic.business.system.IDestinationService;
-import com.basic.business.view.DestinationView;
+import com.basic.business.view.MainView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -16,16 +17,17 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 public class DestinationController {
-    private DestinationView destinationView;
+    private MainView mainView;
     private  IDestinationService destinationManager;
     @Autowired
-    public DestinationController(DestinationView destinationView,IDestinationService destinationManager){
-        this.destinationView=destinationView;
+    public DestinationController(MainView mainView,IDestinationService destinationManager){
+        this.mainView=mainView;
         this.destinationManager=destinationManager;
     }
     public void init(){
-        destinationView.fillTable(destinationManager);
-        destinationView.setVisible(true);
+    	mainView.fillTable(destinationManager);
+    	mainView.setVisible(true);
+    	mainView.setManager(destinationManager);
 
     }
 }
