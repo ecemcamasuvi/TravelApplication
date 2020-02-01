@@ -6,9 +6,11 @@
 package com.basic.business.dataAccess;
 
 import com.basic.business.entities.Destinations;
+import org.hibernate.Query;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,41 +22,51 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class DestinationDal implements IDestinationDal {
 
-    private EntityManager entityManager; //session'a karşılık
+	private EntityManager entityManager; // session'a karşılık
 
-    @Autowired //otomatik hibernate anotasyonu
-    public DestinationDal(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+	@Autowired // otomatik hibernate anotasyonu
+	public DestinationDal(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
 
-    @Override
-    @Transactional//Aspect oriented programming
-    public List<Destinations> getAll() {
-            Session session = entityManager.unwrap(Session.class);
-            List<Destinations> destinations = session.createQuery("from Destinations", Destinations.class).getResultList();
-            return destinations;
-    }
+	@Override
+	@Transactional // Aspect oriented programming
+	public List<Destinations> getAll() {
+		Session session = entityManager.unwrap(Session.class);
+		List<Destinations> destinations = session.createQuery("from Destinations", Destinations.class).getResultList();
+		return destinations;
+	}
 
-    @Override
-    @Transactional
-    public void add(Destinations destination) {
-        	Session session=entityManager.unwrap(Session.class);
-        	session.saveOrUpdate(destination);
-    }
+	@Override
+	@Transactional
+	public void add(Destinations destination) {
+		Session session = entityManager.unwrap(Session.class);
+		session.saveOrUpdate(destination);
+	}
 
-    @Override
-    public void delete(Destinations destination) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+	@Override
+	@Transactional
+	public void delete(Destinations destination) {
+		Session session=entityManager.unwrap(Session.class);
+		session.remove(session.contains(destination) ? destination : session.merge(destination));
+	}
 
-    @Override
-    public void update(Destinations destination) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+	@Override
+	@Transactional
+	public void update(Destinations destination) {
+		Session session = entityManager.unwrap(Session.class);
+		String updateString="update Destinations Set name= :newName,country= :newCountry,city= :newCity,description= :newDescription,imageUrl= :newImg where id= :id";
+		int updatedEntities = session.createQuery(updateString) 
+		        .setParameter( "id", destination.getId() ).setParameter("newName",destination.getName()).setParameter("newCountry",destination.getCountry()).setParameter("newCity",destination.getCity()).
+		        setParameter("newDescription",destination.getDescription()).setParameter("newImg",destination.getImageUrl()).executeUpdate();
+		        
+	}
 
-    @Override
-    public Destinations getById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+	@Override
+	@Transactional
+	public Destinations getById(int id) {
+		Session session = entityManager.unwrap(Session.class);
+		return session.get(Destinations.class, id);
+	}
 
 }

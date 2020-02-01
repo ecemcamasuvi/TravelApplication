@@ -39,18 +39,21 @@ public class DestinationService implements IDestinationService {
     }
 
     @Override
+    @Transactional
     public void delete(Destinations destination) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	this.destinationDal.delete(destination);
     }
 
     @Override
+    @Transactional
     public void update(Destinations destination) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	this.destinationDal.update(destination);
     }
 
     @Override
+    @Transactional
     public Destinations getById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	return this.destinationDal.getById(id);
     }
 
 }
